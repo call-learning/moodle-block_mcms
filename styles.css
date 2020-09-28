@@ -1,0 +1,11 @@
+.block_mcms .blockicon {
+    width: 300px;
+    height: 80px;
+    padding-left: 50px;
+    background: no-repeat;
+}
+
+.block_mcms h3 {
+    padding-bottom: 1em;
+}
+
