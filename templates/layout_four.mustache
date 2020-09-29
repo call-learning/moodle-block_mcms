@@ -23,14 +23,18 @@
     {}
 }}
 
-<div id="block-mcms-{{uniqid}}" class="block-mcms block-cards container pt-5 pb-5">
-    <div class="d-flex flex-row inner-block">
-        <div style="background-image: url({{iconimageurl}});" class="blockicon" ></div>
-        <div>
-            {{#title}}<h3>{{.}}</h3>{{/title}}
+<div id="block-mcms-{{uniqid}}" class="block-mcms block-cards container-fluid pt-5 pb-5"
+    {{#backgroundimageurl}} style="background-image: url({{.}});" {{/backgroundimageurl}}
+    {{#backgroundcolor}} style="background: {{.}};" {{/backgroundcolor}}>
+    <div class="container">
+    {{#title}}<h3 class="text-center">{{.}}</h3>{{/title}}
+    <div class="d-flex flex-row inner-block justify-content-center align-items-center">
+        <div class="flex-grow-1 p-3">
             <div class="pb-5">
                 {{{descriptionhtml}}}
             </div>
         </div>
+        <img src="{{sideimageurl}}" class="w-25 p-3"/>
+    </div>
     </div>
 </div>

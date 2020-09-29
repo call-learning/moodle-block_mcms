@@ -46,15 +46,18 @@ class block_mcms extends block_base {
             return $this->content;
         }
 
-        $layout = $this->config->layout ? $this->config->layout : 'layout_one';
-        $layoutclass = "\\block_mcms\\output\\{$layout}";
+        $text = '';
+        if ($this->config) {
+            $layout = isset($this->config->layout) ? $this->config->layout : 'layout_one';
+            $layoutclass = "\\block_mcms\\output\\{$layout}";
 
-        $renderable = new $layoutclass($this->config, $this->context->id);
+            $renderable = new $layoutclass($this->config, $this->context->id);
 
-        $renderer = $this->page->get_renderer('block_mcms');
-
+            $renderer = $this->page->get_renderer('block_mcms');
+            $text = $renderer->render($renderable);
+        }
         $this->content = new stdClass();
-        $this->content->text = $renderer->render($renderable);
+        $this->content->text = $text;
         $this->content->items = array();
         $this->content->icons = array('t/edit');
         $this->content->footer = '';
@@ -168,6 +171,11 @@ class block_mcms extends block_base {
 
         if (!empty($this->config->classes)) {
             $attributes['class'] .= ' ' . $this->config->classes;
+        }
+        if (!empty($this->config->layout)) {
+            $attributes['class'] .= ' ' . str_replace('_', '-', $this->config->layout);
+        } else {
+            $attributes['class'] .= ' layout-one';
         }
 
         return $attributes;

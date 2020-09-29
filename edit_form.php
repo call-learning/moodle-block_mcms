@@ -25,7 +25,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 class block_mcms_edit_form extends block_edit_form {
-
     protected function specific_definition($mform) {
         global $CFG, $OUTPUT;
 
@@ -36,8 +35,7 @@ class block_mcms_edit_form extends block_edit_form {
         $mform->setType('config_title', PARAM_TEXT);
 
         $editoroptions = array('maxfiles' => EDITOR_UNLIMITED_FILES, 'noclean' => true, 'context' => $this->block->context);
-        $mform->addElement('editor', 'config_text', get_string('config:content', 'block_mcms'), null, $editoroptions);
-        $mform->addRule('config_text', null, 'required', null, 'client');
+        $mform->addElement('editor', 'config_text', get_string('config:text', 'block_mcms'), null, $editoroptions);
         $mform->setType('config_text', PARAM_RAW); // XSS is prevented when printing the block contents and serving files
 
         $mform->addElement('filemanager', 'config_images', get_string('config:images', 'block_mcms'));
@@ -45,7 +43,7 @@ class block_mcms_edit_form extends block_edit_form {
         $mform->addHelpButton('config_images', 'config:images', 'block_mcms');
 
         $mform->addElement('text', 'config_backgroundcolor', get_string('config:backgroundcolor', 'block_mcms'));
-        $mform->setType('config_backgroundcolor', PARAM_ALPHANUMEXT);
+        $mform->setType('config_backgroundcolor', PARAM_RAW);
         $mform->addHelpButton('config_backgroundcolor', 'config:backgroundcolor', 'block_mcms');
 
         $mform->addElement('text', 'config_classes', get_string('config:classes', 'block_mcms'));
@@ -54,20 +52,32 @@ class block_mcms_edit_form extends block_edit_form {
 
         $radioarray = [];
         $imgstyles = ['class' => 'img-thumbnail', 'style' => 'max-width:300px; max-height:300px'];
-        $images = [
-            html_writer::img($OUTPUT->image_url('layout_1', 'block_mcms')->out(), get_string('layout_1', 'block_mcms'),
-                $imgstyles),
-            html_writer::img($OUTPUT->image_url('layout_2', 'block_mcms')->out(), get_string('layout_2', 'block_mcms'),
-                $imgstyles)
-        ];
-        for ($i = 0; $i < count($images); $i++) {
-            $radioarray[] =& $mform->createElement('radio', 'config_layout', '', $images[$i], $i);
-
+        $layouts = ['layout_one', 'layout_two', 'layout_three', 'layout_four'];
+        foreach ($layouts as $layoutname) {
+            $image = html_writer::img($OUTPUT->image_url($layoutname, 'block_mcms')->out(),
+                get_string($layoutname, 'block_mcms'),
+                $imgstyles);
+            $radioarray[] =& $mform->createElement('radio', 'config_layout', '', $image, $layoutname);
         }
         $mform->addGroup($radioarray, 'configlayoutarray', get_string('config:layout', 'block_mcms'), array(' '), false);
         $mform->addHelpButton('configlayoutarray', 'config:layout', 'block_mcms');
     }
 
+    /**
+     * After the form has been defined
+     */
+    public function display() {
+        parent::display();
+        $mform =& $this->_form;
+        //$elementID = $mform->getElement('config_backgroundcolor')->getAttribute('id');
+        //$this->page->requires->js_init_call('M.util.init_colour_picker', array($elementID, null));
+    }
+
+    /**
+     * Set for data
+     *
+     * @param array|stdClass $defaults
+     */
     function set_data($defaults) {
         global $USER;
         $text = '';
@@ -88,7 +98,7 @@ class block_mcms_edit_form extends block_edit_form {
 
             // Now the same for the images.
             $draftid_images =
-                isset($this->block->config->images) ? $this->block->config->images:
+                isset($this->block->config->images) ? $this->block->config->images :
                     file_get_submitted_draft_itemid('config_images');
             file_prepare_draft_area($draftid_images, $this->block->context->id, 'block_mcms', 'content', 0,
                 array('subdirs' => true));

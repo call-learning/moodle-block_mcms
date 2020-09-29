@@ -35,41 +35,18 @@ use templatable;
 require_once($CFG->dirroot . '/blocks/mcms/lib.php');
 
 /**
- * Class containing data for my mcms block.
+ * Class containing data for the third type of layout (side image and text)
  *
  * @package    block_mcms
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class layout_generic implements renderable, templatable {
-
-    /**
-     * @var string title
-     */
-    public $title;
-
-    /**
-     * @var string descriptionhtml
-     */
-
-    public $descriptionhtml;
-
-    /**
-     * @var string iconimageurl
-     */
-
-    public $iconimageurl;
-
+class layout_three extends layout_generic {
     /**
      * @var string backgroundimageurl
      */
 
-    public $backgroundimageurl;
-
-    /**
-     * @var string $backgroundcolor
-     */
-    public $backgroundcolor;
+    public $sideimageurl;
 
     /**
      * Main constructor.
@@ -80,36 +57,14 @@ class layout_generic implements renderable, templatable {
      * @throws \dml_exception
      */
     public function __construct($blockconfig, $blockcontextid) {
-        global $CFG;
-        $this->title = $blockconfig->title;
-        $this->descriptionhtml = format_text($blockconfig->text, $blockconfig->format);
-        $fs = get_file_storage();
-        $allfiles = $fs->get_area_files($blockcontextid, 'block_mcms', 'images');
-
-        foreach ($allfiles as $file) {
-            /* @var \stored_file $file */
-            if ($this->is_valid_image($file)) {
-                $this->process_image($file, $blockcontextid);
-            }
-        }
-        $this->backgroundcolor = $blockconfig->backgroundcolor;
-
+        parent::__construct($blockconfig, $blockcontextid);
     }
 
     protected function process_image($file, $blockcontextid) {
+        parent::process_image($file, $blockcontextid);
         $filename = pathinfo($file->get_filename())['filename'];
-        if ($filename == 'icon') {
-            $this->iconimageurl = \moodle_url::make_pluginfile_url(
-                $blockcontextid,
-                'block_mcms',
-                'images',
-                null,
-                $file->get_filepath(),
-                $file->get_filename()
-            )->out();
-        }
-        if ($filename == 'background') {
-            $this->backgroundimageurl = \moodle_url::make_pluginfile_url(
+        if ($filename == 'side-image') {
+            $this->sideimageurl = \moodle_url::make_pluginfile_url(
                 $blockcontextid,
                 'block_mcms',
                 'images',
@@ -119,22 +74,6 @@ class layout_generic implements renderable, templatable {
             )->out();
         }
     }
-
-    /**
-     * The equivalent function does not work with svg
-     *
-     *
-     * @param \stored_file $file
-     * @return bool
-     */
-    protected function is_valid_image(\stored_file $file) {
-        $mimetype = $file->get_mimetype();
-        if (!file_mimetype_in_typegroup($mimetype, 'web_image')) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      * Export this data so it can be used as the context for a mustache template.
      *
@@ -145,6 +84,6 @@ class layout_generic implements renderable, templatable {
      */
     public function export_for_template(renderer_base $output) {
         global $CFG, $USER;
-        return get_object_vars($this); // All properties.
+        return parent::export_for_template($output);
     }
 }

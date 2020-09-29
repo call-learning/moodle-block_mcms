@@ -23,30 +23,24 @@
  */
 
 namespace block_mcms\output;
-defined('MOODLE_INTERNAL') || die;
+global $CFG;
 
-use plugin_renderer_base;
+defined('MOODLE_INTERNAL') || die();
+
+use renderable;
+use renderer_base;
+use stdClass;
+use templatable;
+
+require_once($CFG->dirroot . '/blocks/mcms/lib.php');
 
 /**
- * block mcms block renderer
+ * Class containing data for the fourth type of layout (side image and text but inverted at
+ * the opposite of layout three)
  *
  * @package    block_mcms
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class renderer extends plugin_renderer_base {
-
-    /**
-     * Return the main content for the block for the given layout
-     *
-     * @param layout_generic $layout The given layout
-     * @return string HTML string
-     * @throws \coding_exception
-     * @throws \moodle_exception
-     */
-    public function render_main(layout_generic $layout) {
-        $layoutclass = get_class($layout);
-        return $this->render_from_template('block_mcms/' . $layoutclass,
-            $layout->export_for_template($this));
-    }
+class layout_four extends layout_three {
 }

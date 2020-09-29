@@ -23,30 +23,50 @@
  */
 
 namespace block_mcms\output;
-defined('MOODLE_INTERNAL') || die;
+global $CFG;
 
-use plugin_renderer_base;
+defined('MOODLE_INTERNAL') || die();
+
+use renderable;
+use renderer_base;
+use stdClass;
+use templatable;
+
+require_once($CFG->dirroot . '/blocks/mcms/lib.php');
 
 /**
- * block mcms block renderer
+ * Class containing data for the second type of layout (title and content with background
+ * color or image)
  *
  * @package    block_mcms
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class renderer extends plugin_renderer_base {
+class layout_two extends layout_generic {
 
     /**
-     * Return the main content for the block for the given layout
+     * Main constructor.
+     * Initialize the layout with current block config values
      *
-     * @param layout_generic $layout The given layout
-     * @return string HTML string
-     * @throws \coding_exception
-     * @throws \moodle_exception
+     * @param stdClass $blockconfig
+     *
+     * @throws \dml_exception
      */
-    public function render_main(layout_generic $layout) {
-        $layoutclass = get_class($layout);
-        return $this->render_from_template('block_mcms/' . $layoutclass,
-            $layout->export_for_template($this));
+    public function __construct($blockconfig, $blockcontextid) {
+        parent::__construct($blockconfig, $blockcontextid);
+
+    }
+
+    /**
+     * Export this data so it can be used as the context for a mustache template.
+     *
+     * @param \renderer_base $output
+     * @return array Context variables for the template
+     * @throws \coding_exception
+     *
+     */
+    public function export_for_template(renderer_base $output) {
+        global $CFG, $USER;
+        return parent::export_for_template($output);
     }
 }

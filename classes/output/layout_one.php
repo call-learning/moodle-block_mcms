@@ -35,7 +35,7 @@ use templatable;
 require_once($CFG->dirroot . '/blocks/mcms/lib.php');
 
 /**
- * Class containing data for my mcms block.
+ * Class containing data for the first type of layout (icon, background color, title and desc.)
  *
  * @package    block_mcms
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
