@@ -72,6 +72,10 @@ class layout_generic implements renderable, templatable {
     public $backgroundcolor;
 
     /**
+     * @var string $decorations a set of class used a decorative element
+     */
+    public $decorations;
+    /**
      * Main constructor.
      * Initialize the layout with current block config values
      *
@@ -81,8 +85,23 @@ class layout_generic implements renderable, templatable {
      */
     public function __construct($blockconfig, $blockcontextid) {
         global $CFG;
-        $this->title = $blockconfig->title;
-        $this->descriptionhtml = format_text($blockconfig->text, $blockconfig->format);
+        $this->title = $blockconfig->title ? $blockconfig->title : '';
+        $this->descriptionhtml = '';
+        if ($blockconfig->text) {
+            $filteropt = new stdClass;
+            $filteropt->overflowdiv = true;
+            // Rewrite url.
+            $text =
+                file_rewrite_pluginfile_urls($blockconfig->text, 'pluginfile.php',
+                    $blockcontextid, 'block_mcms', 'content',
+                    null);
+            $format = FORMAT_HTML;
+            // Check to see if the format has been properly set on the config.
+            if (isset($blockconfig->format)) {
+                $format = $blockconfig->format;
+            }
+            $this->descriptionhtml = format_text($text, $format, $filteropt);
+        }
         $fs = get_file_storage();
         $allfiles = $fs->get_area_files($blockcontextid, 'block_mcms', 'images');
 
@@ -93,7 +112,9 @@ class layout_generic implements renderable, templatable {
             }
         }
         $this->backgroundcolor = $blockconfig->backgroundcolor;
-
+        if (isset($blockconfig->decorations)) {
+            $this->decorations = explode(',', $blockconfig->decorations);
+        }
     }
 
     protected function process_image($file, $blockcontextid) {

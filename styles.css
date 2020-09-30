@@ -1,5 +1,5 @@
 .block_mcms .blockicon {
-    width: 300px;
+    width: 80px;
     height: 80px;
     padding-left: 50px;
     background: no-repeat;
@@ -17,4 +17,26 @@
 .block-mcms.container-fluid {
     padding-right: unset;
     padding-left: unset;
+}
+.block_mcms.layout-two .side-image {
+    max-width: 50%;
+}
+/* A sample decorative element, more can be added in the theme */
+.block_mcms .with-dual-square {
+    content: url([[pix:block_mcms|deco/dualsquare]]);
+}
+.block_mcms .with-single-square {
+    content: url([[pix:block_mcms|deco/singlesquare]]);
+}
+.block_mcms .with-top-square {
+    top: -100px;
+    left: -180px;
+    width: 460px;
+    z-index: -1;
+}
+.block_mcms .with-bottom-square {
+    bottom: -280px;
+    right: -180px;
+    width: 460px;
+    z-index: -1;
 }

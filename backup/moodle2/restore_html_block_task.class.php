@@ -21,13 +21,13 @@
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+defined('MOODLE_INTERNAL') || die();
 /**
- * Specialised restore task for the html block
+ * Specialised restore task for the mcms block
  * (requires encode_content_links in some configdata attrs)
  *
  */
-class restore_html_block_task extends restore_block_task {
+class restore_mcms_block_task extends restore_block_task {
 
     protected function define_my_settings() {
     }
@@ -36,18 +36,18 @@ class restore_html_block_task extends restore_block_task {
     }
 
     public function get_fileareas() {
-        return array('content');
+        return array('content','images');
     }
 
     public function get_configdata_encoded_attributes() {
-        return array('text'); // We need to encode some attrs in configdata
+        return array('text'); // We need to encode some attrs in configdata.
     }
 
     static public function define_decode_contents() {
 
         $contents = array();
 
-        $contents[] = new restore_html_block_decode_content('block_instances', 'configdata', 'block_instance');
+        $contents[] = new restore_mcms_block_decode_content('block_instances', 'configdata', 'block_instance');
 
         return $contents;
     }
@@ -62,14 +62,14 @@ class restore_html_block_task extends restore_block_task {
  * field, to serve the configdata->text content to the restore_decode_processor
  * packaging it back to its serialized form after process
  */
-class restore_html_block_decode_content extends restore_decode_content {
+class restore_mcms_block_decode_content extends restore_decode_content {
 
-    protected $configdata; // Temp storage for unserialized configdata
+    protected $configdata; // Temp storage for unserialized configdata.
 
     protected function get_iterator() {
         global $DB;
 
-        // Build the SQL dynamically here
+        // Build the SQL dynamically here.
         $fieldslist = 't.' . implode(', t.', $this->fields);
         $sql = "SELECT t.id, $fieldslist
                   FROM {" . $this->tablename . "} t

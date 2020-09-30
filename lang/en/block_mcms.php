@@ -37,6 +37,9 @@ $string['config:classes_help'] = 'The purpose of this configuration is to aid wi
 $string['config:text'] = 'Content';
 $string['config:title'] = 'MCMS block title';
 $string['config:images'] = 'MCMS image';
+$string['config:decorations'] = 'Decoration styles for this block';
+$string['config:decorations_help'] = 'Decoration styles for this block, a set of classes that, put together will
+be added to an empty div. We can have several divs inserted in the block if you separate the classes by comma.';
 $string['config:images_help'] = 'MCMS image for either background or illustration.';
 $string['config:background-image'] = 'MCMS background image';
 $string['config:background-image_help'] = 'MCMS background image';
@@ -47,4 +50,5 @@ $string['config:layout'] = 'MCMS layout';
 $string['config:layout_help'] = 'MCMS layout';
 $string['layout_one'] = 'Layout 1: Icon/Title/Description';
 $string['layout_two'] = 'Layout 2: Icon/Title/Background/FullSize';
-$string['layout_three'] = 'Layout 3: Side image and text';
+$string['layout_three'] = 'Layout 3: Side image on the right and text';
+$string['layout_four'] = 'Layout 3: Side image on the left and text';

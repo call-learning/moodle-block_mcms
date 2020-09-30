@@ -24,9 +24,12 @@
 }}
 
 <div id="block-mcms-{{uniqid}}" class="block-mcms block-cards container pt-5 pb-5">
-    <div class="d-flex flex-row inner-block">
+    <div class="d-flex flex-row inner-block position-relative">
+        {{#decorations}}
+            <div class="{{.}}" style="position:absolute;"></div>
+        {{/decorations}}
         <div style="background-image: url({{iconimageurl}});" class="blockicon" ></div>
-        <div>
+        <div class="text-content">
             {{#title}}<h3>{{.}}</h3>{{/title}}
             <div class="pb-5">
                 {{{descriptionhtml}}}

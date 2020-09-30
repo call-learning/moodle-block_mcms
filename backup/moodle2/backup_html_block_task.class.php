@@ -21,7 +21,7 @@
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+defined('MOODLE_INTERNAL') || die();
 /**
  * Specialised backup task for the html block
  * (requires encode_content_links in some configdata attrs)
@@ -36,15 +36,15 @@ class backup_html_block_task extends backup_block_task {
     }
 
     public function get_fileareas() {
-        return array('content');
+        return array('content', 'images');
     }
 
     public function get_configdata_encoded_attributes() {
-        return array('text'); // We need to encode some attrs in configdata
+        return array('text'); // We need to encode some attrs in configdata.
     }
 
     static public function encode_content_links($content) {
-        return $content; // No special encoding of links
+        return $content; // No special encoding of links.
     }
 }
 

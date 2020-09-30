@@ -50,6 +50,10 @@ class block_mcms_edit_form extends block_edit_form {
         $mform->setType('config_classes', PARAM_TEXT);
         $mform->addHelpButton('config_classes', 'config:classes', 'block_mcms');
 
+        $mform->addElement('text', 'config_decorations', get_string('config:decorations', 'block_mcms'), array('size' => 250));
+        $mform->setType('config_decorations', PARAM_TEXT);
+        $mform->addHelpButton('config_decorations', 'config:decorations', 'block_mcms');
+
         $radioarray = [];
         $imgstyles = ['class' => 'img-thumbnail', 'style' => 'max-width:300px; max-height:300px'];
         $layouts = ['layout_one', 'layout_two', 'layout_three', 'layout_four'];
