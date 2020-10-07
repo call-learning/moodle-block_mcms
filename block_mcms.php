@@ -105,7 +105,12 @@ class block_mcms extends block_base {
         $config->format = $data->text['format'];
 
         // Save the images.
-        file_save_draft_area_files($data->images, $this->context->id, 'block_mcms', 'images', 0, array('subdirs' => true));
+        file_save_draft_area_files($data->images,
+            $this->context->id,
+            'block_mcms',
+            'images',
+            0,
+            array('subdirs' => true));
         parent::instance_config_save($config, $nolongerused);
     }
 

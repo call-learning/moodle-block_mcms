@@ -24,7 +24,7 @@
 }}
 
 <div id="block-mcms-{{uniqid}}" class="block-mcms block-cards container-fluid pt-5 pb-5"
-    {{#backgroundimageurl}} style="background-image: url({{.}});" {{/backgroundimageurl}}
+    {{#backgroundurl}} style="background-image: url({{.}});" {{/backgroundurl}}
     {{#backgroundcolor}} style="background: {{.}};" {{/backgroundcolor}}>
     <div class="container">
     <div class="d-flex flex-row inner-block justify-content-center align-items-center position-relative">
@@ -35,7 +35,7 @@
                 {{#title}}<h3>{{.}}</h3>{{/title}}
                 {{{descriptionhtml}}}
         </div>
-        <img src="{{sideimageurl}}" class="side-image p-3"/>
+        <img src="{{sideimageurl}}" class="side-image m-3 img-fluid"/>
     </div>
     </div>
 </div>

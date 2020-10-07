@@ -60,19 +60,8 @@ class layout_three extends layout_generic {
         parent::__construct($blockconfig, $blockcontextid);
     }
 
-    protected function process_image($file, $blockcontextid) {
-        parent::process_image($file, $blockcontextid);
-        $filename = pathinfo($file->get_filename())['filename'];
-        if ($filename == 'side-image') {
-            $this->sideimageurl = \moodle_url::make_pluginfile_url(
-                $blockcontextid,
-                'block_mcms',
-                'images',
-                null,
-                $file->get_filepath(),
-                $file->get_filename()
-            )->out();
-        }
+    protected function process_image($file, $filetypes = array('icon', 'background', 'side-image')) {
+        parent::process_image($file, $filetypes);
     }
     /**
      * Export this data so it can be used as the context for a mustache template.

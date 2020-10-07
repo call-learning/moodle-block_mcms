@@ -100,13 +100,13 @@ class block_mcms_edit_form extends block_edit_form {
             $defaults->config_text['itemid'] = $draftid_editor;
             $defaults->config_text['format'] = $this->block->config->format;
 
-            // Now the same for the images.
-            $draftid_images =
-                isset($this->block->config->images) ? $this->block->config->images :
-                    file_get_submitted_draft_itemid('config_images');
-            file_prepare_draft_area($draftid_images, $this->block->context->id, 'block_mcms', 'content', 0,
-                array('subdirs' => true));
-            $defaults->config_image = $draftid_images;
+            ////// Now the same for the images.
+            //$draftid_images =
+            //    isset($this->block->config->images) ? $this->block->config->images :
+            //        file_get_submitted_draft_itemid('config_images');
+            //file_prepare_draft_area($draftid_images, $this->block->context->id, 'block_mcms', 'images', 0,
+            //    array('subdirs' => true));
+            //$defaults->config_image = $draftid_images;
         }
         if (!$this->block->user_can_edit() && !empty($this->block->config->title)) {
             // If a title has been set but the user cannot edit it format it nicely.

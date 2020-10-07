@@ -55,10 +55,10 @@ class layout_generic implements renderable, templatable {
     public $descriptionhtml;
 
     /**
-     * @var string iconimageurl
+     * @var string iconurl
      */
 
-    public $iconimageurl;
+    public $iconurl;
 
     /**
      * @var string backgroundimageurl
@@ -75,6 +75,7 @@ class layout_generic implements renderable, templatable {
      * @var string $decorations a set of class used a decorative element
      */
     public $decorations;
+
     /**
      * Main constructor.
      * Initialize the layout with current block config values
@@ -108,7 +109,7 @@ class layout_generic implements renderable, templatable {
         foreach ($allfiles as $file) {
             /* @var \stored_file $file */
             if ($this->is_valid_image($file)) {
-                $this->process_image($file, $blockcontextid);
+                $this->process_image($file);
             }
         }
         $this->backgroundcolor = $blockconfig->backgroundcolor;
@@ -117,23 +118,20 @@ class layout_generic implements renderable, templatable {
         }
     }
 
-    protected function process_image($file, $blockcontextid) {
+    /**
+     * Process image
+     *
+     * @param $file
+     * @param string[] $filetypes
+     */
+    protected function process_image($file, $filetypes = array('icon', 'background')) {
         $filename = pathinfo($file->get_filename())['filename'];
-        if ($filename == 'icon') {
-            $this->iconimageurl = \moodle_url::make_pluginfile_url(
-                $blockcontextid,
-                'block_mcms',
-                'images',
-                null,
-                $file->get_filepath(),
-                $file->get_filename()
-            )->out();
-        }
-        if ($filename == 'background') {
-            $this->backgroundimageurl = \moodle_url::make_pluginfile_url(
-                $blockcontextid,
-                'block_mcms',
-                'images',
+        if (in_array($filename, $filetypes)) {
+            $variablename = str_replace('-', '', $filename) . "url";
+            $this->$variablename = \moodle_url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
                 null,
                 $file->get_filepath(),
                 $file->get_filename()
