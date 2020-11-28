@@ -23,9 +23,9 @@
  */
 
 namespace block_mcms\output;
-defined('MOODLE_INTERNAL') || die;
-
 use plugin_renderer_base;
+
+defined('MOODLE_INTERNAL') || die;
 
 /**
  * block mcms block renderer

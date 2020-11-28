@@ -23,20 +23,13 @@
  */
 
 namespace block_mcms\output;
-global $CFG;
-
 defined('MOODLE_INTERNAL') || die();
 
-use renderable;
-use renderer_base;
-use stdClass;
-use templatable;
-
-require_once($CFG->dirroot . '/blocks/mcms/lib.php');
-
 /**
- * Class containing data for the fourth type of layout (side image and text but inverted at
- * the opposite of layout three)
+ * Class containing data for the fourth type of layout
+ *
+ * Side image and text but inverted at
+ * the opposite of layout three.
  *
  * @package    block_mcms
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>

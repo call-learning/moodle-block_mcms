@@ -22,29 +22,56 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
+
 /**
  * Specialised backup task for the html block
- * (requires encode_content_links in some configdata attrs)
  *
+ * Requires encode_content_links in some configdata attrs.
+ *
+ * @package    block_mcms
+ * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class backup_html_block_task extends backup_block_task {
+class backup_mcms_block_task extends backup_block_task {
 
-    protected function define_my_settings() {
+    /**
+     * Encoded content link
+     *
+     * @param string $content
+     * @return string
+     */
+    static public function encode_content_links($content) {
+        return $content; // No special encoding of links.
     }
 
-    protected function define_my_steps() {
-    }
-
+    /**
+     * Files areat to backup
+     *
+     * @return string[]
+     */
     public function get_fileareas() {
         return array('content', 'images');
     }
 
+    /**
+     * Encoded attributes
+     *
+     * @return string[]
+     */
     public function get_configdata_encoded_attributes() {
         return array('text'); // We need to encode some attrs in configdata.
     }
 
-    static public function encode_content_links($content) {
-        return $content; // No special encoding of links.
+    /**
+     * Nothing to do here
+     */
+    protected function define_my_settings() {
+    }
+
+    /**
+     * Nothing to do here
+     */
+    protected function define_my_steps() {
     }
 }
 

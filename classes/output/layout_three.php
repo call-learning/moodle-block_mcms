@@ -23,16 +23,7 @@
  */
 
 namespace block_mcms\output;
-global $CFG;
-
 defined('MOODLE_INTERNAL') || die();
-
-use renderable;
-use renderer_base;
-use stdClass;
-use templatable;
-
-require_once($CFG->dirroot . '/blocks/mcms/lib.php');
 
 /**
  * Class containing data for the third type of layout (side image and text)
@@ -45,34 +36,18 @@ class layout_three extends layout_generic {
     /**
      * @var string backgroundimageurl
      */
-
     public $sideimageurl;
 
     /**
-     * Main constructor.
-     * Initialize the layout with current block config values
+     * Process image
      *
-     * @param stdClass $blockconfig
-     *
-     * @throws \dml_exception
+     * @param object $file
+     * @param string[] $filetypes
      */
-    public function __construct($blockconfig, $blockcontextid) {
-        parent::__construct($blockconfig, $blockcontextid);
-    }
-
-    protected function process_image($file, $filetypes = array('icon', 'background', 'side-image')) {
+    protected function process_image($file, $filetypes = array('icon', 'background')) {
+        if (!in_array('side-image', $filetypes)) {
+            $filetypes[] = 'side-image';
+        }
         parent::process_image($file, $filetypes);
-    }
-    /**
-     * Export this data so it can be used as the context for a mustache template.
-     *
-     * @param \renderer_base $output
-     * @return array Context variables for the template
-     * @throws \coding_exception
-     *
-     */
-    public function export_for_template(renderer_base $output) {
-        global $CFG, $USER;
-        return parent::export_for_template($output);
     }
 }

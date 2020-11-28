@@ -22,13 +22,15 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\session\manager;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
  * Get plugin file for this block (identical to HTML block)
  *
  * @param stdClass $course course object
- * @param stdClass $birecord_or_cm block instance record
+ * @param stdClass $birecordorcm block instance record
  * @param stdClass $context context object
  * @param string $filearea file area
  * @param array $args extra arguments
@@ -42,8 +44,8 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @category  files
  */
-function block_mcms_pluginfile($course, $birecord_or_cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
-    global $DB, $CFG, $USER;
+function block_mcms_pluginfile($course, $birecordorcm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+    global $CFG, $USER;
 
     if ($context->contextlevel != CONTEXT_BLOCK) {
         send_file_not_found();
@@ -65,6 +67,18 @@ function block_mcms_pluginfile($course, $birecord_or_cm, $context, $filearea, $a
         } else if ($parentcontext->contextlevel === CONTEXT_USER && $parentcontext->instanceid != $USER->id) {
             // The block is in the context of a user, it is only visible to the user who it belongs to.
             send_file_not_found();
+        } else if ($parentcontext->contextlevel == CONTEXT_SYSTEM) {
+            // We try if the local_mcms page module exist to check for the page.
+            if (class_exists('\\local_mcms\\page')
+                && $birecordorcm
+                && $birecordorcm->pagetypepattern == 'mcmspage'
+                && $birecordorcm->subpagepattern) {
+                $pageid = $birecordorcm->subpagepattern;
+                $page = new \local_mcms\page($pageid);
+                if (!\local_mcms\page::can_view_page($USER, $page, $context)) {
+                    send_file_not_found();
+                }
+            }
         }
         // At this point there is no way to check SYSTEM context, so ignoring it.
     }
@@ -82,23 +96,24 @@ function block_mcms_pluginfile($course, $birecord_or_cm, $context, $filearea, $a
         send_file_not_found();
     }
 
-    if ($parentcontext = context::instance_by_id($birecord_or_cm->parentcontextid, IGNORE_MISSING)) {
+    if ($parentcontext = context::instance_by_id($birecordorcm->parentcontextid, IGNORE_MISSING)) {
         if ($parentcontext->contextlevel == CONTEXT_USER) {
             $forcedownload = true;
         }
     } else {
         $forcedownload = true;
     }
-    \core\session\manager::write_close();
+    manager::write_close();
     send_stored_file($file, null, 0, $forcedownload, $options);
 }
 
 /**
  * Perform global search replace such as when migrating site to new URL.
  *
- * @param  $search
- * @param  $replace
+ * @param  string $search
+ * @param  string $replace
  * @return void
+ * @throws dml_exception
  */
 function block_mcms_global_db_replace($search, $replace) {
     global $DB;

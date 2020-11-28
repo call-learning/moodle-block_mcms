@@ -23,16 +23,7 @@
  */
 
 namespace block_mcms\output;
-global $CFG;
-
 defined('MOODLE_INTERNAL') || die();
-
-use renderable;
-use renderer_base;
-use stdClass;
-use templatable;
-
-require_once($CFG->dirroot . '/blocks/mcms/lib.php');
 
 /**
  * Class containing data for the first type of layout (icon, background color, title and desc.)
@@ -42,30 +33,4 @@ require_once($CFG->dirroot . '/blocks/mcms/lib.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class layout_one extends layout_generic {
-
-    /**
-     * Main constructor.
-     * Initialize the layout with current block config values
-     *
-     * @param stdClass $blockconfig
-     *
-     * @throws \dml_exception
-     */
-    public function __construct($blockconfig, $blockcontextid) {
-        parent::__construct($blockconfig, $blockcontextid);
-
-    }
-
-    /**
-     * Export this data so it can be used as the context for a mustache template.
-     *
-     * @param \renderer_base $output
-     * @return array Context variables for the template
-     * @throws \coding_exception
-     *
-     */
-    public function export_for_template(renderer_base $output) {
-        global $CFG, $USER;
-        return parent::export_for_template($output);
-    }
 }

@@ -23,15 +23,16 @@
  */
 
 namespace block_mcms\output;
-global $CFG;
-
 defined('MOODLE_INTERNAL') || die();
-
+use dml_exception;
+use moodle_url;
 use renderable;
 use renderer_base;
 use stdClass;
+use stored_file;
 use templatable;
 
+global $CFG;
 require_once($CFG->dirroot . '/blocks/mcms/lib.php');
 
 /**
@@ -51,19 +52,16 @@ class layout_generic implements renderable, templatable {
     /**
      * @var string descriptionhtml
      */
-
     public $descriptionhtml;
 
     /**
      * @var string iconurl
      */
-
     public $iconurl;
 
     /**
      * @var string backgroundimageurl
      */
-
     public $backgroundimageurl;
 
     /**
@@ -81,11 +79,10 @@ class layout_generic implements renderable, templatable {
      * Initialize the layout with current block config values
      *
      * @param stdClass $blockconfig
-     *
-     * @throws \dml_exception
+     * @param int $blockcontextid
+     * @throws \coding_exception
      */
     public function __construct($blockconfig, $blockcontextid) {
-        global $CFG;
         $this->title = $blockconfig->title ? $blockconfig->title : '';
         $this->descriptionhtml = '';
         if ($blockconfig->text) {
@@ -107,7 +104,6 @@ class layout_generic implements renderable, templatable {
         $allfiles = $fs->get_area_files($blockcontextid, 'block_mcms', 'images');
 
         foreach ($allfiles as $file) {
-            /* @var \stored_file $file */
             if ($this->is_valid_image($file)) {
                 $this->process_image($file);
             }
@@ -119,16 +115,31 @@ class layout_generic implements renderable, templatable {
     }
 
     /**
+     * The equivalent function does not work with svg
+     *
+     *
+     * @param stored_file $file
+     * @return bool
+     */
+    protected function is_valid_image(stored_file $file) {
+        $mimetype = $file->get_mimetype();
+        if (!file_mimetype_in_typegroup($mimetype, 'web_image')) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Process image
      *
-     * @param $file
+     * @param object $file
      * @param string[] $filetypes
      */
     protected function process_image($file, $filetypes = array('icon', 'background')) {
         $filename = pathinfo($file->get_filename())['filename'];
         if (in_array($filename, $filetypes)) {
             $variablename = str_replace('-', '', $filename) . "url";
-            $this->$variablename = \moodle_url::make_pluginfile_url(
+            $this->$variablename = moodle_url::make_pluginfile_url(
                 $file->get_contextid(),
                 $file->get_component(),
                 $file->get_filearea(),
@@ -140,30 +151,12 @@ class layout_generic implements renderable, templatable {
     }
 
     /**
-     * The equivalent function does not work with svg
-     *
-     *
-     * @param \stored_file $file
-     * @return bool
-     */
-    protected function is_valid_image(\stored_file $file) {
-        $mimetype = $file->get_mimetype();
-        if (!file_mimetype_in_typegroup($mimetype, 'web_image')) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Export this data so it can be used as the context for a mustache template.
      *
-     * @param \renderer_base $output
+     * @param renderer_base $output
      * @return array Context variables for the template
-     * @throws \coding_exception
-     *
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $USER;
         return get_object_vars($this); // All properties.
     }
 }

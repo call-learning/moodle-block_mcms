@@ -1,0 +1,22 @@
+# MCMS #
+
+Moodle Mini CMS block. A configurable block with severable available layouts.
+More layouts can be added in the theme and templates can be overridden.
+
+More user documentation soon :)
+
+## License ##
+
+2020 CALL Learning <contact@call-learning.fr>
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.

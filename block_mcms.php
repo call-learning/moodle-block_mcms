@@ -24,19 +24,39 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class block_mcms
+ *
+ * @package    block_mcms
+ * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_mcms extends block_base {
-
+    /**
+     * Init block
+     *
+     * @throws coding_exception
+     */
     public function init() {
         $this->title = get_string('pluginname', 'block_mcms');
     }
 
+    /**
+     * Header is hidden by default
+     *
+     * @return bool
+     */
     public function hide_header() {
         return true;
     }
 
+    /**
+     * Retrieve content
+     *
+     * @return stdClass|string|null
+     * @throws coding_exception
+     */
     public function get_content() {
-        global $CFG, $OUTPUT;
-
         if ($this->content !== null) {
             return $this->content;
         }
@@ -65,8 +85,18 @@ class block_mcms extends block_base {
         return $this->content;
     }
 
+    /**
+     * All config fields
+     *
+     */
     const ALL_CONFIGS = ['title', 'images', 'text', 'backgroundcolor', 'classes', 'layout'];
 
+
+    /**
+     * Translate between config and block values
+     *
+     * @throws coding_exception
+     */
     public function specialization() {
         if (isset($this->config)) {
             foreach (self::ALL_CONFIGS as $configname) {
@@ -80,30 +110,42 @@ class block_mcms extends block_base {
         }
     }
 
-    public function applicable_formats() {
-        return array('all' => true);
-    }
-
+    /**
+     * Allow multiples on the same page
+     *
+     * @return bool
+     */
     public function instance_allow_multiple() {
         return true;
     }
 
+    /**
+     * Has configuration options
+     *
+     * @return bool
+     */
     public function has_config() {
         return true;
     }
 
     /**
      * Serialize and store config data
+     *
+     * @param object $data
+     * @param false $nolongerused
      */
     public function instance_config_save($data, $nolongerused = false) {
-        global $DB;
-
         $config = clone($data);
-        // Move embedded files into a proper filearea and adjust HTML links to match.
-        $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_mcms', 'content', 0,
-            array('subdirs' => true), $data->text['text']);
-        $config->format = $data->text['format'];
-
+        if (!empty($data->text['itemid'])) {
+            // Move embedded files into a proper filearea and adjust HTML links to match.
+            $config->text = file_save_draft_area_files($data->text['itemid'],
+                $this->context->id,
+                'block_mcms',
+                'content',
+                0,
+                array('subdirs' => true), $data->text['text']);
+            $config->format = $data->text['format'];
+        }
         // Save the images.
         file_save_draft_area_files($data->images,
             $this->context->id,
@@ -114,8 +156,12 @@ class block_mcms extends block_base {
         parent::instance_config_save($config, $nolongerused);
     }
 
+    /**
+     * Instance delete
+     *
+     * @return bool
+     */
     public function instance_delete() {
-        global $DB;
         $fs = get_file_storage();
         $fs->delete_area_files($this->context->id, 'block_mcms');
         return true;
@@ -145,12 +191,11 @@ class block_mcms extends block_base {
     }
 
     /**
-     * Is con
+     * Is content trusted ?
      *
      * @return false
      */
     public function content_is_trusted() {
-        global $SCRIPT;
         return false;
     }
 
@@ -164,14 +209,12 @@ class block_mcms extends block_base {
         return (!empty($this->config->title) && parent::instance_can_be_docked());
     }
 
-    /*
+    /**
      * Add custom html attributes to aid with theming and styling
      *
      * @return array
      */
     public function html_attributes() {
-        global $CFG;
-
         $attributes = parent::html_attributes();
 
         if (!empty($this->config->classes)) {
@@ -185,4 +228,5 @@ class block_mcms extends block_base {
 
         return $attributes;
     }
+
 }
