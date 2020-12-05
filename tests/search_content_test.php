@@ -18,7 +18,7 @@
  * Class for MCMS block search tests
  *
  * @package   block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
+ * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
@@ -28,7 +28,7 @@ require_once('mcms_test_base.php');
  * Unit test for search indexing.
  *
  * @package   block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
+ * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class search_content_test extends advanced_testcase {

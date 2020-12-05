@@ -18,7 +18,7 @@
  * Unit tests for block_mcms backup process
  *
  * @package   block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
+ * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -36,7 +36,7 @@ require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
 /**
  * Unit tests for block_mcms backup process
  *
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
+ * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_mcms_backup_test extends advanced_testcase {

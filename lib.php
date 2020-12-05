@@ -18,7 +18,7 @@
  * Moodle Mini CMS block
  *
  * @package    block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
+ * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -40,7 +40,7 @@ defined('MOODLE_INTERNAL') || die();
  * @throws coding_exception
  * @throws moodle_exception
  * @throws require_login_exception
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning>
+ * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @category  files
  */
