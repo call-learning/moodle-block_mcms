@@ -41,15 +41,20 @@ class block_mcms_test extends advanced_testcase {
     /**
      * Test that output is as expected. This also test file loading into the plugin.
      * @dataProvider layout_renderer_test_provider
+     * @param array $layoutconfig
+     * @param array $expectedstrings
+     * @throws file_exception
+     * @throws stored_file_creation_exception
      */
     public function test_render_layout($layoutconfig, $expectedstrings) {
-        $block = $this->setup_block(self::LAYOUT_ONE_CONFIG);
+        $block = $this->setup_block($layoutconfig);
         $content = $block->get_content();
         $this->assertNotNull($content->text);
 
-        $expected = self::LAYOUT_ONE_RENDER_RESULT;
         $text = $this->filter_out_content($content->text, $block);
-        $this->assertEquals($expected, $text);
+        foreach($expectedstrings as $expected) {
+            $this->assertContains($expected, $text);
+        }
     }
 
     /**
