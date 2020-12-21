@@ -28,7 +28,7 @@ use block_mcms\output\layout_three;
 use block_mcms\output\layout_two;
 
 defined('MOODLE_INTERNAL') || die();
-require_once('mcms_test_base.php');
+require_once('block_mcms_test_base.php');
 global $CFG;
 require_once($CFG->dirroot . '/backup/util/includes/backup_includes.php');
 require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
@@ -40,7 +40,7 @@ require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_mcms_backup_test extends advanced_testcase {
-    use mcms_test_base;
+    use block_mcms_test_base;
     /**
      * Test that output is as expected. This also test file loading into the plugin.
      *

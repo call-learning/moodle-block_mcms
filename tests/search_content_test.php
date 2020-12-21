@@ -22,7 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
-require_once('mcms_test_base.php');
+require_once('block_mcms_test_base.php');
 
 /**
  * Unit test for search indexing.
@@ -32,7 +32,7 @@ require_once('mcms_test_base.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class search_content_test extends advanced_testcase {
-    use mcms_test_base;
+    use block_mcms_test_base;
 
     /**
      * Tests all functionality in the search area.

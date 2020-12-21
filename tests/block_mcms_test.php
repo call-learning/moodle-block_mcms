@@ -27,7 +27,7 @@ use block_mcms\output\layout_four;
 use block_mcms\output\layout_one;
 use block_mcms\output\layout_three;
 use block_mcms\output\layout_two;
-require_once('mcms_test_base.php');
+require_once('block_mcms_test_base.php');
 
 /**
  * Unit tests for block_mcms
@@ -36,7 +36,7 @@ require_once('mcms_test_base.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_mcms_test extends advanced_testcase {
-    use mcms_test_base;
+    use block_mcms_test_base;
 
     /**
      * Test that output is as expected. This also test file loading into the plugin.

@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-trait mcms_test_base {
+trait block_mcms_test_base {
     /**
      * Current block
      *
