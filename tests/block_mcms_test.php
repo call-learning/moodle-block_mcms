@@ -23,10 +23,12 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+
 use block_mcms\output\layout_four;
 use block_mcms\output\layout_one;
 use block_mcms\output\layout_three;
 use block_mcms\output\layout_two;
+
 require_once('block_mcms_test_base.php');
 
 /**
@@ -40,6 +42,7 @@ class block_mcms_test extends advanced_testcase {
 
     /**
      * Test that output is as expected. This also test file loading into the plugin.
+     *
      * @dataProvider layout_renderer_test_provider
      * @param array $layoutconfig
      * @param array $expectedstrings
@@ -52,7 +55,7 @@ class block_mcms_test extends advanced_testcase {
         $this->assertNotNull($content->text);
 
         $text = $this->filter_out_content($content->text, $block);
-        foreach($expectedstrings as $expected) {
+        foreach ($expectedstrings as $expected) {
             $this->assertContains($expected, $text);
         }
     }
@@ -174,28 +177,28 @@ class block_mcms_test extends advanced_testcase {
                 'layoutconfig' => self::LAYOUT_ONE_CONFIG,
                 'expectedstrings' => array(
                     'url(https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/images/icon.jpg)',
-                    '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/text-image.jpg" alt="text-image.jpg" /><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/other-image.jpg" alt="other-image.jpg" /></div>'
+                    'sunt in culpa qui officia deserunt mollit anim id est laborum </p><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/text-image.jpg" alt="text-image.jpg" /><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/other-image.jpg" alt="other-image.jpg" />'
                 )
             ),
             'Render layout 2' => array(
                 'layoutconfig' => self::LAYOUT_TWO_CONFIG,
                 'expectedstrings' => array(
                     'style="background-image: url(https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/images/background.jpg);',
-                    '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/text-image.jpg" alt="text-image.jpg" /><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/other-image.jpg" alt="other-image.jpg" /></div>'
+                    'sunt in culpa qui officia deserunt mollit anim id est laborum </p><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/text-image.jpg" alt="text-image.jpg" /><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/other-image.jpg" alt="other-image.jpg" />'
                 )
             ),
             'Render layout 3' => array(
                 'layoutconfig' => self::LAYOUT_THREE_CONFIG,
                 'expectedstrings' => array(
                     '<img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/images/side-image.jpg" class="side-image m-3 img-fluid d-none d-sm-flex"/>',
-                    '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/text-image.jpg" alt="text-image.jpg" /><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/other-image.jpg" alt="other-image.jpg" /></div>'
+                    'sunt in culpa qui officia deserunt mollit anim id est laborum </p><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/text-image.jpg" alt="text-image.jpg" /><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/other-image.jpg" alt="other-image.jpg" />'
                 )
             ),
             'Render layout 4' => array(
                 'layoutconfig' => self::LAYOUT_FOUR_CONFIG,
                 'expectedstrings' => array(
                     '<img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/images/side-image.jpg" class="side-image m-3 img-fluid d-none d-sm-flex"/>',
-                    '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/text-image.jpg" alt="text-image.jpg" /><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/other-image.jpg" alt="other-image.jpg" /></div>'
+                    'sunt in culpa qui officia deserunt mollit anim id est laborum </p><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/text-image.jpg" alt="text-image.jpg" /><img src="https://www.example.com/moodle/pluginfile.php/BLOCKCONTEXTID/block_mcms/content/other-image.jpg" alt="other-image.jpg" />'
                 )
             )
         );

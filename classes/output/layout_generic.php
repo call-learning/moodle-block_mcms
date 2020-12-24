@@ -87,7 +87,6 @@ class layout_generic implements renderable, templatable {
         $this->descriptionhtml = '';
         if ($blockconfig->text) {
             $filteropt = new stdClass;
-            $filteropt->overflowdiv = true;
             // Rewrite url.
             $text =
                 file_rewrite_pluginfile_urls($blockconfig->text, 'pluginfile.php',
