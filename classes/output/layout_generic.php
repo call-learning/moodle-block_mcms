@@ -78,7 +78,7 @@ class layout_generic implements renderable, templatable {
      * Main constructor.
      * Initialize the layout with current block config values
      *
-     * @param stdClass $blockconfig
+     * @param stdClass|object $blockconfig
      * @param int $blockcontextid
      * @throws \coding_exception
      */
@@ -134,7 +134,7 @@ class layout_generic implements renderable, templatable {
      * @param object $file
      * @param string[] $filetypes
      */
-    protected function process_image($file, $filetypes = array('icon', 'background')) {
+    protected function process_image($file, $filetypes = ['icon', 'background']) {
         $filename = pathinfo($file->get_filename())['filename'];
         if (in_array($filename, $filetypes)) {
             $variablename = str_replace('-', '', $filename) . "url";

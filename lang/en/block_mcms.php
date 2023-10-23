@@ -44,5 +44,7 @@ $string['layout_one'] = 'Layout 1: Icon(icon.svg or icon.png or icon.jpg)/Title/
 $string['layout_two'] = 'Layout 2: Icon(icon.svg or icon.png or icon.jpg)/Title/Background(background.jpg)/FullSize';
 $string['layout_three'] = 'Layout 3: Side image (side-image.jpg) on the right and text';
 $string['layout_four'] = 'Layout 4: Side image (side-image.jpg) on the left and text';
+$string['sideimage'] = "Illustrative side image";
 $string['config:layout_help'] = 'Layout: 4 layouts from icon/description to image on the sides and centered title with background.
-<br>'. $string['layout_one'] .'<br>'.$string['layout_two'] .'<br>'.$string['layout_three'] .'<br>'.$string['layout_four'] .'<br>';
+<br>' . $string['layout_one'] . '<br>' . $string['layout_two'] . '<br>' . $string['layout_three'] . '<br>' .
+    $string['layout_four'] . '<br>';

@@ -20,7 +20,13 @@
     This template renders the main content area for the mcms block.
 
     Example context (json):
-    {}
+    {
+        "sideimageurl": "http://example.com/image.jpg",
+        "title": "Title",
+        "backgroundurl": "http://example.com/image.jpg",
+        "descriptionhtml": "<p>Some html</p>",
+        "decorations": ["decoration1", "decoration2"]
+     }
 }}
 
 <div id="block-mcms-{{uniqid}}" class="block-mcms block-cards container pt-5 pb-5">

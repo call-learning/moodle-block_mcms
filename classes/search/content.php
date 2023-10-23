@@ -13,15 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-/**
- * Moodle Mini CMS block
- *
- * @package    block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace block_mcms\search;
 
 use context;
@@ -29,8 +20,6 @@ use context_system;
 use core_search\base_block;
 use core_search\document_factory;
 use core_search\manager;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Search area for block_mcms blocks
@@ -50,7 +39,7 @@ class content extends base_block {
      * @throws \coding_exception
      * @throws \dml_exception
      */
-    public function get_document($record, $options = array()) {
+    public function get_document($record, $options = []) {
         // Create empty document.
         $doc = document_factory::instance($record->id,
             $this->componentname, $this->areaname);
@@ -159,7 +148,7 @@ class content extends base_block {
                        $restrictions
               ORDER BY bi.timemodified ASC",
             array_merge($contextparams, [CONTEXT_BLOCK, CONTEXT_MODULE, CONTEXT_COURSE,
-                $modifiedfrom, $this->get_block_name(), '%'],
+                $modifiedfrom, $this->get_block_name(), '%', ],
                 $restrictionparams));
     }
 

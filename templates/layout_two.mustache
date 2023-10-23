@@ -15,12 +15,18 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template block_mcms/layout_one
+    @template block_mcms/layout_two
 
     This template renders the main content area for the mcms block.
 
     Example context (json):
-    {}
+    {
+        "sideimageurl": "http://example.com/image.jpg",
+        "title": "Title",
+        "backgroundurl": "http://example.com/image.jpg",
+        "descriptionhtml": "<p>Some html</p>",
+        "decorations": ["decoration1", "decoration2"]
+     }
 }}
 
 <div id="block-mcms-{{uniqid}}" class="block-mcms block-cards container-fluid pt-5 pb-5"

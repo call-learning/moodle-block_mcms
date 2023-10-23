@@ -13,18 +13,14 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Moodle Mini CMS block
+ * Library definition for Block MCSM
  *
- * @package    block_mcms
+ * @package   block_mcms
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 use core\session\manager;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Get plugin file for this block (identical to HTML block)
@@ -44,7 +40,7 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @category  files
  */
-function block_mcms_pluginfile($course, $birecordorcm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function block_mcms_pluginfile($course, $birecordorcm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $CFG, $USER;
 
     if ($context->contextlevel != CONTEXT_BLOCK) {
@@ -92,7 +88,9 @@ function block_mcms_pluginfile($course, $birecordorcm, $context, $filearea, $arg
     $filename = array_pop($args);
     $filepath = $args ? '/' . implode('/', $args) . '/' : '/';
 
-    if (!$file = $fs->get_file($context->id, 'block_mcms', $filearea, 0, $filepath, $filename) or $file->is_directory()) {
+    $file = $fs->get_file($context->id, 'block_mcms', $filearea, 0, $filepath, $filename);
+
+    if (!$file || $file->is_directory()) {
         send_file_not_found();
     }
 
@@ -110,21 +108,24 @@ function block_mcms_pluginfile($course, $birecordorcm, $context, $filearea, $arg
 /**
  * Perform global search replace such as when migrating site to new URL.
  *
- * @param  string $search
- * @param  string $replace
+ * @param string $search
+ * @param string $replace
  * @return void
  * @throws dml_exception
  */
 function block_mcms_global_db_replace($search, $replace) {
     global $DB;
 
-    $instances = $DB->get_recordset('block_instances', array('blockname' => 'mcms'));
+    $instances = $DB->get_recordset('block_instances', ['blockname' => 'mcms']);
     foreach ($instances as $instance) {
         $config = unserialize(base64_decode($instance->configdata));
-        if (isset($config->text) and is_string($config->text)) {
+        if (isset($config->text) && is_string($config->text)) {
             $config->text = str_replace($search, $replace, $config->text);
-            $DB->update_record('block_instances', ['id' => $instance->id,
-                'configdata' => base64_encode(serialize($config)), 'timemodified' => time()]);
+            $DB->update_record('block_instances', (object) [
+                'id' => $instance->id,
+                'configdata' => base64_encode(serialize($config)), 'timemodified' => time(),
+            ]
+            );
         }
     }
     $instances->close();

@@ -13,16 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-/**
- * Moodle Mini CMS block
- *
- * @package    block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Specialised backup task for the html block
  *
@@ -40,7 +30,7 @@ class backup_mcms_block_task extends backup_block_task {
      * @param string $content
      * @return string
      */
-    static public function encode_content_links($content) {
+    public static function encode_content_links($content) {
         return $content; // No special encoding of links.
     }
 
@@ -50,7 +40,7 @@ class backup_mcms_block_task extends backup_block_task {
      * @return string[]
      */
     public function get_fileareas() {
-        return array('content', 'images');
+        return ['content', 'images'];
     }
 
     /**
@@ -59,7 +49,7 @@ class backup_mcms_block_task extends backup_block_task {
      * @return string[]
      */
     public function get_configdata_encoded_attributes() {
-        return array('text'); // We need to encode some attrs in configdata.
+        return ['text']; // We need to encode some attrs in configdata.
     }
 
     /**

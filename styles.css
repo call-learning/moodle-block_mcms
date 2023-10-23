@@ -9,12 +9,6 @@
     padding-bottom: 1em;
 }
 
-/* Layout two is supposed to take the full width */
-.block_mcms.layout-two div.p-3 {
-    padding-left: unset !important;
-    padding-right: unset !important;
-}
-
 .block-mcms.container-fluid {
     padding-right: unset;
     padding-left: unset;

@@ -13,18 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-/**
- * Moodle Mini CMS block
- *
- * @package    block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace block_mcms\output;
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class containing data for the first type of layout (icon, background color, title and desc.)
  *

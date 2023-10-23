@@ -20,7 +20,7 @@
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
+
 /**
  * Base class for MCMS block tests
  *
@@ -41,17 +41,13 @@ trait block_mcms_test_base {
      */
     protected $user = null;
 
-    // @codingStandardsIgnoreStart
-    // phpcs:disable
     /**
      * Basic setup for these tests.
      */
-    public function setUp() {
+    public function setUp(): void {
         $this->resetAfterTest(true);
         $this->user = $this->getDataGenerator()->create_user();
     }
-    // phpcs:enable
-    // @codingStandardsIgnoreEnd
 
     /**
      * Setup block
@@ -135,7 +131,7 @@ trait block_mcms_test_base {
             $files[] = $filename;
             $imagehtml .= '<img src="@@PLUGINFILE@@/' . basename($filename) . '" />';
         }
-        $this->upload_image_draft_area($usercontext, $draftcontentitemid, $files, array());
+        $this->upload_image_draft_area($usercontext, $draftcontentitemid, $files, []);
         $text = '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
             . 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim '
             . 'veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
@@ -176,14 +172,14 @@ trait block_mcms_test_base {
             if (!empty($destfilenames[$index])) {
                 $destfilename = $destfilenames[$index];
             }
-            $filerecord = array(
+            $filerecord = [
                 'contextid' => $usercontext->id,
                 'component' => 'user',
                 'filearea' => 'draft',
                 'itemid' => $draftitemid,
                 'filepath' => '/',
                 'filename' => $destfilename,
-            );
+            ];
             // Create an area to upload the file.
             $fs = get_file_storage();
             // Create a file from the string that we made earlier.

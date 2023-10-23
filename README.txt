@@ -3,7 +3,7 @@
 Moodle Mini CMS block. A configurable block with severable available layouts.
 More layouts can be added in the theme and templates can be overridden.
 
-More user documentation soon :)
+[![Moodle Plugin CI](https://github.com/call-learning/moodle-block_mcms/actions/workflows/ci.yml/badge.svg?branch=MOODLE_401_STABLE)](https://github.com/call-learning/moodle-block_mcms/actions/workflows/ci.yml)
 
 ## License ##
 

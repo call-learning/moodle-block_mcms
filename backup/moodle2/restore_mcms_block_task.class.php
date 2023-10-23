@@ -14,12 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Moodle Mini CMS block
+ * Restore procedure for block MCMS
  *
- * @package    block_mcms
+ * @package   block_mcms
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -38,8 +39,8 @@ class restore_mcms_block_task extends restore_block_task {
      *
      * @return array|void
      */
-    static public function define_decode_contents() {
-        $contents = array();
+    public static function define_decode_contents() {
+        $contents = [];
         $contents[] = new restore_mcms_block_decode_content('block_instances', 'configdata', 'block_instance');
         return $contents;
     }
@@ -49,8 +50,8 @@ class restore_mcms_block_task extends restore_block_task {
      *
      * @return array|void
      */
-    static public function define_decode_rules() {
-        return array();
+    public static function define_decode_rules() {
+        return [];
     }
 
     /**
@@ -59,7 +60,7 @@ class restore_mcms_block_task extends restore_block_task {
      * @return string[]
      */
     public function get_fileareas() {
-        return array('content', 'images');
+        return ['content', 'images'];
     }
 
     /**
@@ -68,7 +69,7 @@ class restore_mcms_block_task extends restore_block_task {
      * @return string[]
      */
     public function get_configdata_encoded_attributes() {
-        return array('text'); // We need to encode some attrs in configdata.
+        return ['text']; // We need to encode some attrs in configdata.
     }
 
     /**
@@ -118,7 +119,7 @@ class restore_mcms_block_decode_content extends restore_decode_content {
                  WHERE b.backupid = ?
                    AND b.itemname = ?
                    AND t.blockname = 'mcms'";
-        $params = array($this->restoreid, $this->mapping);
+        $params = [$this->restoreid, $this->mapping];
         return ($DB->get_recordset_sql($sql, $params));
     }
 

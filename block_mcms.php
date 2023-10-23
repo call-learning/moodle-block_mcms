@@ -13,17 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-/**
- * Moodle Mini CMS block
- *
- * @package    block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class block_mcms
  *
@@ -78,8 +67,8 @@ class block_mcms extends block_base {
         }
         $this->content = new stdClass();
         $this->content->text = $text;
-        $this->content->items = array();
-        $this->content->icons = array('t/edit');
+        $this->content->items = [];
+        $this->content->icons = ['t/edit'];
         $this->content->footer = '';
 
         return $this->content;
@@ -143,7 +132,7 @@ class block_mcms extends block_base {
                 'block_mcms',
                 'content',
                 0,
-                array('subdirs' => true), $data->text['text']);
+                ['subdirs' => true], $data->text['text']);
             $config->format = $data->text['format'];
         }
         // Save the images.
@@ -152,7 +141,7 @@ class block_mcms extends block_base {
             'block_mcms',
             'images',
             0,
-            array('subdirs' => true));
+            ['subdirs' => true]);
         parent::instance_config_save($config, $nolongerused);
     }
 
@@ -179,13 +168,13 @@ class block_mcms extends block_base {
         // This extra check if file area is empty adds one query if it is not empty but saves several if it is.
         if (!$fs->is_area_empty($fromcontext->id, 'block_mcms', 'content', 0, false)) {
             $draftitemid = 0;
-            file_prepare_draft_area($draftitemid, $fromcontext->id, 'block_mcms', 'content', 0, array('subdirs' => true));
-            file_save_draft_area_files($draftitemid, $this->context->id, 'block_mcms', 'content', 0, array('subdirs' => true));
+            file_prepare_draft_area($draftitemid, $fromcontext->id, 'block_mcms', 'content', 0, ['subdirs' => true]);
+            file_save_draft_area_files($draftitemid, $this->context->id, 'block_mcms', 'content', 0, ['subdirs' => true]);
         }
         if (!$fs->is_area_empty($fromcontext->id, 'block_mcms', 'images', 0, false)) {
             $draftitemid = 0;
-            file_prepare_draft_area($draftitemid, $fromcontext->id, 'block_mcms', 'images', 0, array('subdirs' => true));
-            file_save_draft_area_files($draftitemid, $this->context->id, 'block_mcms', 'images', 0, array('subdirs' => true));
+            file_prepare_draft_area($draftitemid, $fromcontext->id, 'block_mcms', 'images', 0, ['subdirs' => true]);
+            file_save_draft_area_files($draftitemid, $this->context->id, 'block_mcms', 'images', 0, ['subdirs' => true]);
         }
         return true;
     }

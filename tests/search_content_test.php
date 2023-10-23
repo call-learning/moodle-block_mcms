@@ -21,6 +21,12 @@
  * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace block_mcms;
+
+use advanced_testcase;
+use block_mcms_test_base;
+
 defined('MOODLE_INTERNAL') || die();
 require_once('block_mcms_test_base.php');
 
@@ -35,7 +41,28 @@ class search_content_test extends advanced_testcase {
     use block_mcms_test_base;
 
     /**
+     * First layout
+     */
+    const LAYOUT_ONE_CONFIG = [
+        'title' => 'block title',
+        'backgroundcolor' => '#fefefe',
+        'classes' => 'my-class-name',
+        'decorations' => 'mcms-square',
+        'layout' => 'layout_one',
+        'contentimages' => [
+            'text-image.jpg',
+            'other-image.jpg',
+        ],
+        'images' => [
+            'other-image.jpg' => 'icon.jpg',
+            'background.jpg' => 'background.jpg',
+        ],
+    ];
+
+    /**
      * Tests all functionality in the search area.
+     *
+     * @covers \block_mcms\search\content::get_recordset_by_timestamp
      */
     public function test_search_area() {
         global $CFG, $DB;
@@ -53,7 +80,7 @@ class search_content_test extends advanced_testcase {
         $this->assertEquals('mcms', $area->get_block_name());
         $rs = $area->get_recordset_by_timestamp();
         $count = 0;
-        $course = $DB->get_record('course', array('id' => SITEID)); // Frontpage.
+        $course = $DB->get_record('course', ['id' => SITEID]); // Frontpage.
         $after = time();
         foreach ($rs as $record) {
             $count++;
@@ -73,7 +100,7 @@ class search_content_test extends advanced_testcase {
             // Get config data.
             $data = unserialize(base64_decode($record->configdata));
             $this->assertEquals('block title', $data->title);
-            $this->assertContains('Lorem ipsum', $data->text);
+            $this->assertStringContainsString('Lorem ipsum', $data->text);
             $this->assertEquals(FORMAT_HTML, $data->format);
 
             // Check the get_document function 'new' flag.
@@ -94,16 +121,16 @@ class search_content_test extends advanced_testcase {
                 array_filter($files, function($f) {
                     return !$f->is_directory();
                 }));
-            $this->assertEquals(array(
+            $this->assertEquals([
                 'background.jpg',
                 'icon.jpg',
                 'other-image.jpg',
                 'text-image.jpg',
-            ), array_values($filenamewdir));
+            ], array_values($filenamewdir));
 
             // Check the document fields are all as expected.
             $this->assertEquals('block title', $doc->get('title'));
-            $this->assertContains('Lorem ipsum', $doc->get('content'));
+            $this->assertStringContainsString('Lorem ipsum', $doc->get('content'));
             $this->assertEquals($blockcontext->id, $doc->get('contextid'));
             $this->assertEquals(\core_search\manager::TYPE_TEXT, $doc->get('type'));
             $this->assertEquals($course->id, $doc->get('courseid'));
@@ -129,25 +156,6 @@ class search_content_test extends advanced_testcase {
         $rs->close();
         $this->assertEquals(0, $count);
     }
-
-    // @codingStandardsIgnoreStart
-    // phpcs:disable
-    /**
-     * First layout
-     */
-    const LAYOUT_ONE_CONFIG = [
-        'title' => 'block title',
-        'backgroundcolor' => '#fefefe',
-        'classes' => 'my-class-name',
-        'decorations' => 'mcms-square',
-        'layout' => 'layout_one',
-        'contentimages' => array(
-            'text-image.jpg',
-            'other-image.jpg'),
-        'images' => array('other-image.jpg' => 'icon.jpg',
-            'background.jpg' => 'background.jpg'),
-    ];
-    // phpcs:enable
-    // @codingStandardsIgnoreEnd
 }
+
 

@@ -13,17 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-/**
- * Moodle Mini CMS block
- *
- * @package    block_mcms
- * @copyright 2020 - CALL Learning - Laurent David <laurent@call-learning.fr>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace block_mcms\output;
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Class containing data for the third type of layout (side image and text)
@@ -44,7 +34,7 @@ class layout_three extends layout_generic {
      * @param object $file
      * @param string[] $filetypes
      */
-    protected function process_image($file, $filetypes = array('icon', 'background')) {
+    protected function process_image($file, $filetypes = ['icon', 'background']) {
         if (!in_array('side-image', $filetypes)) {
             $filetypes[] = 'side-image';
         }
