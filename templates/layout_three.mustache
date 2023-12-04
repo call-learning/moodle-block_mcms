@@ -37,7 +37,9 @@
             {{#decorations}}
                 <div class="{{.}}" style="position:absolute;"></div>
             {{/decorations}}
-            <img src="{{sideimageurl}}" class="side-image m-3 img-fluid d-none d-sm-flex" alt="{{#str}}sideimage, block_mcms {{/str}}">
+            {{#sideimageurl}}
+                <img src="{{.}}" class="side-image m-3 img-fluid d-none d-sm-flex" alt="{{#str}}sideimage, block_mcms {{/str}}">
+            {{/sideimageurl}}
             <div class="flex-grow-1 p-3 text-left side-text">
                 {{#title}}<h3>{{.}}</h3>{{/title}}
                 {{{descriptionhtml}}}
